@@ -37,9 +37,15 @@ function drawImg(result) {
         [].forEach.call(result.items, function(item, index) {
             var url = item.media.m;
             var title = index + '. ' + item.title;
+
+            var taglinks = $('<p>');
+            [].forEach.call(item.tags.split(' '), function(tag) {
+		    taglinks.append($('<a>').attr('href',"javascript:doSearch('" + tag + "')").text(tag).css('margin','0px 5px'));
+	    });
             area.append(
 		$('<div>').css(recordStyle).append(
 		    $('<p>').css(titleStyle).text(title),
+                    taglinks,
                     $('<div>').css(imageStyle).append(
                         $('<img>').attr({src: url})
 		    )
@@ -48,3 +54,9 @@ function drawImg(result) {
         });
     }
 }
+
+function doSearch(keyword) {
+    $('#keyword').val(keyword);
+    $('#searchButton').click();
+}
+
